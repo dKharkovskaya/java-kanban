@@ -1,16 +1,16 @@
-public class SubTask extends Task{
-    private EpicTask epicTask;
+public class Subtask extends Task{
+    private Epic epicTask;
 
-    SubTask(long id, String name, String description) {
+    Subtask(long id, String name, String description) {
         super(id, name, description);
-        nameTaskType = "SubTask";
+        nameTaskType = String.valueOf(TaskType.SUBTASK);
     }
 
-    public EpicTask getEpicTask() {
+    public Epic getEpicTask() {
         return epicTask;
     }
 
-    public void setEpicTask(EpicTask epicTask) {
+    public void setEpicTask(Epic epicTask) {
         this.epicTask = epicTask;
     }
 

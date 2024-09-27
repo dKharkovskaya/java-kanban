@@ -1,24 +1,24 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class EpicTask extends Task {
-    HashMap<Long, SubTask> subTasks = new HashMap<>();
+public class Epic extends Task {
+    HashMap<Long, Subtask> subTasks = new HashMap<>();
 
-    EpicTask(long id, String name, String description) {
+    Epic(long id, String name, String description) {
         super(id, name, description);
-        nameTaskType = "EpicTask";
+        nameTaskType = String.valueOf(TaskType.EPIC);
     }
 
-    public void addSubTask(SubTask subtask) {
+    public void addSubTask(Subtask subtask) {
         subtask.setEpicTask(this);
         subTasks.put(subtask.getId(), subtask);
     }
 
-    public SubTask removeSubTask(SubTask subtask) {
+    public Subtask removeSubTask(Subtask subtask) {
         return subTasks.remove(subtask.getId());
     }
 
-    public ArrayList<SubTask> getListSubTask() {
+    public ArrayList<Subtask> getListSubTask() {
         return new ArrayList<>(subTasks.values());
     }
 

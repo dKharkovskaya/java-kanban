@@ -1,8 +1,8 @@
 public class Task {
-    private final long id;
-    private final String name;
-    private final String description;
-    private Status status;
+    protected final long id;
+    protected final String name;
+    protected final String description;
+    protected Status status;
     protected String nameTaskType;
 
     Task(long id, String name, String description) {
@@ -10,7 +10,7 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
-        nameTaskType = "Task";
+        nameTaskType = String.valueOf(TaskType.TASK);
     }
 
     @Override

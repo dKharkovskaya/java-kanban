@@ -9,21 +9,21 @@ public class Main {
         Task task1 = manager.createTask("task1", "description task1");
         Task task2 = manager.createTask("task2", "description task2");
 
-        EpicTask epicTask1 = manager.createEpicTask("epicTask1", "description epicTask1");
-        SubTask subTask1 = manager.createSubTask(epicTask1, "subTask1", "description subTask1");
+        Epic epicTask1 = manager.createEpicTask("epicTask1", "description epicTask1");
+        Subtask subTask1 = manager.createSubTask(epicTask1, "subTask1", "description subTask1");
         if (subTask1 == null) {
             return;
         }
 
-        EpicTask epicTask2 = manager.createEpicTask("epicTask2", "description epicTask2");
+        Epic epicTask2 = manager.createEpicTask("epicTask2", "description epicTask2");
         if (epicTask2 == null) {
             return;
         }
-        SubTask subTask2 = manager.createSubTask(epicTask2, "subTask2", "description subTask2");
+        Subtask subTask2 = manager.createSubTask(epicTask2, "subTask2", "description subTask2");
         if (subTask2 == null) {
             return;
         }
-        SubTask subTask3 = manager.createSubTask(epicTask2, "subTask3", "description subTask3");
+        Subtask subTask3 = manager.createSubTask(epicTask2, "subTask3", "description subTask3");
         if (subTask3 == null) {
             return;
         }
