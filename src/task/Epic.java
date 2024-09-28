@@ -1,10 +1,12 @@
+package task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Epic extends Task {
-    HashMap<Long, Subtask> subTasks = new HashMap<>();
+    private final HashMap<Long, Subtask> subTasks = new HashMap<>();
 
-    Epic(long id, String name, String description) {
+    public Epic(long id, String name, String description) {
         super(id, name, description);
         nameTaskType = String.valueOf(TaskType.EPIC);
     }

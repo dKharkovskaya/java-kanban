@@ -1,9 +1,12 @@
+package manager;
+
+import task.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class TaskManager {
-    static long id = 0;
+    private long id = 0;
     private final HashMap<Long, Task> tasks = new HashMap<>();
     private final HashMap<Long, Epic> epicTasks = new HashMap<>();
 
@@ -58,8 +61,8 @@ public class TaskManager {
 
     public Task updateTask(Task task, String name, String description) {
         if (tasks.containsKey(task.getId())) {
-            Task newTask =  new Task(task.getId(), name, description);
-            tasks.put(task.getId(),newTask);
+            Task newTask = new Task(task.getId(), name, description);
+            tasks.put(task.getId(), newTask);
             return newTask;
         }
         return null;

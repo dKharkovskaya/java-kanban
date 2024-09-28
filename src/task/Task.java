@@ -1,3 +1,5 @@
+package task;
+
 public class Task {
     protected final long id;
     protected final String name;
@@ -5,7 +7,7 @@ public class Task {
     protected Status status;
     protected String nameTaskType;
 
-    Task(long id, String name, String description) {
+    public Task(long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;

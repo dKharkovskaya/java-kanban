@@ -1,7 +1,9 @@
-public class Subtask extends Task{
+package task;
+
+public class Subtask extends Task {
     private Epic epicTask;
 
-    Subtask(long id, String name, String description) {
+    public Subtask(long id, String name, String description) {
         super(id, name, description);
         nameTaskType = String.valueOf(TaskType.SUBTASK);
     }

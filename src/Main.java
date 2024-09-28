@@ -1,3 +1,6 @@
+import manager.TaskManager;
+import task.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -73,7 +76,7 @@ public class Main {
 
         printAllTasks(manager);
 
-        System.out.println("========Clear List Task========");
+        System.out.println("========Clear List task.Task========");
 
         manager.clearListTasks();
 
