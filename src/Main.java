@@ -1,4 +1,5 @@
-import manager.TaskManager;
+import manager.InMemoryTaskManager;
+import manager.Managers;
 import task.*;
 
 public class Main {
@@ -7,7 +8,7 @@ public class Main {
 
         System.out.println("=========create========");
 
-        TaskManager manager = new TaskManager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
 
         Task task1 = manager.createTask("task1", "description task1");
         Task task2 = manager.createTask("task2", "description task2");
@@ -87,27 +88,35 @@ public class Main {
         manager.clearListEpicTasks();
 
         printAllTasks(manager);
+
+        System.out.println("========Print List History task========");
+        printHistoryTask(manager);
+    }
+    static void printHistoryTask(InMemoryTaskManager manager) {
+        for (Task task : manager.getHistoryManager().getHistory()) {
+            System.out.println(task);
+        }
     }
 
-    static void printTasks(TaskManager manager) {
+    static void printTasks(InMemoryTaskManager manager) {
         for (Task task : manager.getListTasks()) {
             System.out.println(task);
         }
     }
 
-    static void printEpicTasks(TaskManager manager) {
+    static void printEpicTasks(InMemoryTaskManager manager) {
         for (Task task : manager.getListEpicTasks()) {
             System.out.println(task);
         }
     }
 
-    static void printSubTasks(TaskManager manager) {
+    static void printSubTasks(InMemoryTaskManager manager) {
         for (Task task : manager.getListSubTasks()) {
             System.out.println(task);
         }
     }
 
-    static void printAllTasks(TaskManager manager) {
+    static void printAllTasks(InMemoryTaskManager manager) {
         printTasks(manager);
         printEpicTasks(manager);
         printSubTasks(manager);

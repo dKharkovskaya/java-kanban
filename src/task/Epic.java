@@ -2,6 +2,7 @@ package task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Epic extends Task {
     private final HashMap<Long, Subtask> subTasks = new HashMap<>();
@@ -43,5 +44,12 @@ public class Epic extends Task {
         } else {
             setStatus(Status.IN_PROGRESS);
         }
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Epic item = (Epic) o;
+        return id == item.id && Objects.equals(name, item.name) && Objects.equals(description, item.description);
     }
 }

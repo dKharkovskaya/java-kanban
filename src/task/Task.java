@@ -1,4 +1,5 @@
 package task;
+import java.util.Objects;
 
 public class Task {
     protected final long id;
@@ -38,5 +39,13 @@ public class Task {
 
     public long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task item = (Task) o;
+        return id == item.id && Objects.equals(name, item.name) && Objects.equals(description, item.description);
     }
 }

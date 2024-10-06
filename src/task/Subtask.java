@@ -1,5 +1,7 @@
 package task;
 
+import java.util.Objects;
+
 public class Subtask extends Task {
     private Epic epicTask;
 
@@ -27,4 +29,11 @@ public class Subtask extends Task {
         return super.toString() + "\n" + "\towned: EpicTask Id#" + epicTask.getId();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subtask item = (Subtask) o;
+        return id == item.id && Objects.equals(name, item.name) && Objects.equals(description, item.description);
+    }
 }
