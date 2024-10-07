@@ -41,11 +41,11 @@ public class InMemoryTaskManager implements TaskManager {
         return null;
     }
     @Override
-    public ArrayList<Task> getListTasks() {
+    public List<Task> getListTasks() {
         return new ArrayList<>(tasks.values());
     }
     @Override
-    public ArrayList<Task> getListEpicTasks() {
+    public List<Task> getListEpicTasks() {
         return new ArrayList<>(epicTasks.values());
     }
     @Override
