@@ -4,6 +4,7 @@ import task.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private long id = 0;
@@ -48,7 +49,7 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(epicTasks.values());
     }
     @Override
-    public ArrayList<Task> getListSubTasks() {
+    public List<Task> getListSubTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         for (Epic task : new ArrayList<>(epicTasks.values())) {
@@ -56,7 +57,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return tasks;
     }
-
+    @Override
     public Task updateTask(Task task, String name, String description) {
         if (tasks.containsKey(task.getId())) {
             Task newTask = new Task(task.getId(), name, description);
@@ -65,7 +66,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return null;
     }
-
+    @Override
     public Epic updateEpicTask(Epic task, String name, String description) {
         if (epicTasks.containsKey(task.getId())) {
             Epic newEpic = new Epic(task.getId(), name, description);
@@ -78,7 +79,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return null;
     }
-
+    @Override
     public Subtask updateSubTask(Subtask task, String name, String description) {
         if (epicTasks.containsKey(task.getEpicTask().getId())) {
             Epic epic = epicTasks.get(task.getEpicTask().getId());
@@ -89,17 +90,17 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return null;
     }
-
+    @Override
     public Task getTaskById(Long id) {
         historyManager.add(tasks.get(id));
         return tasks.get(id);
     }
-
+    @Override
     public Epic getEpicTaskById(Long id) {
         historyManager.add(epicTasks.get(id));
         return epicTasks.get(id);
     }
-
+    @Override
     public Subtask getSubTaskById(Long id) {
         for (Epic epic : epicTasks.values()) {
             for (Subtask sub : epic.getListSubTask()) {
@@ -111,15 +112,15 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return null;
     }
-
+    @Override
     public Task deleteTaskById(Long id) {
         return tasks.remove(id);
     }
-
+    @Override
     public Epic deleteEpicTaskById(Long id) {
         return epicTasks.remove(id);
     }
-
+    @Override
     public Subtask deleteSubTaskById(Long id) {
         Subtask sub = getSubTaskById(id);
         if (sub == null) {
@@ -130,15 +131,15 @@ public class InMemoryTaskManager implements TaskManager {
 
         return epic.removeSubTask(sub);
     }
-
+    @Override
     public Task deleteTask(Task task) {
         return deleteTaskById(task.getId());
     }
-
+    @Override
     public Epic deleteEpicTask(Epic task) {
         return deleteEpicTaskById(task.getId());
     }
-
+    @Override
     public Subtask deleteSubTask(Subtask task) {
         return deleteSubTaskById(task.getId());
     }
@@ -165,6 +166,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void clearListEpicTasks() {
         epicTasks.clear();
+    }
+    @Override
+    public void clearListSubTasks(Epic epic) {
+        epic.getListSubTask().clear();
     }
 
 }
