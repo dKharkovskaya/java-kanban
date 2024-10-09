@@ -24,7 +24,7 @@ public interface TaskManager {
     Task deleteTaskById(Long id);
     Epic deleteEpicTaskById(Long id);
     Subtask deleteSubTaskById(Long id);
-    HistoryManager getHistoryManager();
+    List<Task> getHistory();
     void clearListTasks();
     void clearListEpicTasks();
     void clearListSubTasks(Epic epic);

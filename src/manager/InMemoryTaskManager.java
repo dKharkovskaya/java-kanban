@@ -11,11 +11,10 @@ public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Long, Task> tasks = new HashMap<>();
     protected final HashMap<Long, Epic> epicTasks = new HashMap<>();
     protected final HistoryManager historyManager = Managers.getDefaultHistory();
-
-    public HistoryManager getHistoryManager() {
-        return historyManager;
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
-
     @Override
     public Task createTask(String name, String description) {
         id += 1;

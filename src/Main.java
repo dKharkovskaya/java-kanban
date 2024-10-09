@@ -93,7 +93,7 @@ public class Main {
         printHistoryTask(manager);
     }
     static void printHistoryTask(InMemoryTaskManager manager) {
-        for (Task task : manager.getHistoryManager().getHistory()) {
+        for (Task task : manager.getHistory()) {
             System.out.println(task);
         }
     }
