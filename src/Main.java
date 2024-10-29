@@ -1,5 +1,4 @@
 import manager.InMemoryTaskManager;
-import manager.Managers;
 import task.*;
 
 public class Main {
@@ -92,6 +91,7 @@ public class Main {
         System.out.println("========Print List History task========");
         printHistoryTask(manager);
     }
+
     static void printHistoryTask(InMemoryTaskManager manager) {
         for (Task task : manager.getHistory()) {
             System.out.println(task);

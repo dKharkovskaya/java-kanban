@@ -59,8 +59,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         task.prev = null;
         task.next = null;
     }
-
-    class Node<E> {
+    static class Node<E extends Task> {
         public E data;
         public Node<E> next;
         public Node<E> prev;
@@ -71,4 +70,5 @@ public class InMemoryHistoryManager implements HistoryManager {
             this.prev = prev;
         }
     }
+
 }
