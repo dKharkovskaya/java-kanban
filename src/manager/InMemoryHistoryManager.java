@@ -74,7 +74,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             task.next = task.prev.prev;
             task.data = null;
         }
-        size --;
+        size--;
     }
 
     private static class Node<E extends Task> {
