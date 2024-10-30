@@ -2,14 +2,13 @@ package manager;
 
 import task.Task;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private Map<Integer, Node<Task>> historyTasks = new LinkedHashMap<>();
+    public Map<Integer, Node<Task>> historyTasks = new HashMap<>();
+    private int size = 0;
     private Node<Task> tail;
+    private Node<Task> head;
 
     @Override
     public void add(Task task) {
@@ -29,15 +28,19 @@ public class InMemoryHistoryManager implements HistoryManager {
         return getTasks();
     }
 
-    public void linkLast(Task task) {
-        final Node<Task> oldTail = tail;
-        final Node<Task> newNode = new Node<>(null, task, oldTail);
-        tail = newNode;
-        historyTasks.put((int) task.getId(), tail);
-        if (oldTail == null)
+    private void linkLast(Task task) {
+        Node<Task> newNode;
+        if (size == 0) {
+            newNode = new Node<>(null, task, null);
+            head = newNode;
             tail = newNode;
-        else
-            oldTail.prev = newNode;
+        } else {
+            newNode = new Node<>(tail, task, null);
+            tail.next = newNode;
+            tail = newNode;
+        }
+        size++;
+        historyTasks.put((int) task.getId(), newNode);
     }
 
     public List<Task> getTasks() {
@@ -49,26 +52,37 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void removeNode(Node task) {
-        if (task.next == null) {
-            task.prev.next = null;
-        } else if (task.prev == null) {
-            task.next.prev = null;
-        } else {
-            Node next = task.next;
-            Node prev = task.prev;
-            prev.next = next;
-            next.prev = prev;
+        if (size == 0) {
+            return;
         }
-        task.prev = null;
-        task.next = null;
+        if (size == 1) {
+            head = null;
+            tail = null;
+            task.data = null;
+            size = 0;
+            return;
+        } else if (task == tail) {
+            task.prev.next = null;
+            task.prev = null;
+            task.data = null;
+        } else if (task == head) {
+            task.next.prev = null;
+            task.next = null;
+            task.data = null;
+        } else {
+            task.prev = task.next.next;
+            task.next = task.prev.prev;
+            task.data = null;
+        }
+        size --;
     }
 
-    static class Node<E extends Task> {
-        public E data;
-        public Node<E> next;
-        public Node<E> prev;
+    private static class Node<E extends Task> {
+        E data;
+        Node<E> next;
+        Node<E> prev;
 
-        public Node(Node<E> prev, E data, Node<E> next) {
+        Node(Node<E> prev, E data, Node<E> next) {
             this.data = data;
             this.next = next;
             this.prev = prev;

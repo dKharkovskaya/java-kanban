@@ -72,7 +72,7 @@ public class Main {
 
         task2 = manager.deleteTaskById(task2.getId());
         epicTask1 = manager.deleteEpicTaskById(epicTask1.getId());
-        subTask3 = manager.deleteSubTaskById(subTask3.getId());
+        //subTask3 = manager.deleteSubTaskById(subTask3.getId());
 
         printAllTasks(manager);
 
