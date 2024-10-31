@@ -5,21 +5,21 @@ import task.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    public Map<Integer, Node<Task>> historyTasks = new HashMap<>();
+    public Map<Long, Node<Task>> historyTasks = new HashMap<>();
     private int size = 0;
     private Node<Task> tail;
     private Node<Task> head;
 
     @Override
     public void add(Task task) {
-        if (historyTasks.containsKey((int) task.getId())) {
-            remove((int) task.getId());
+        if (historyTasks.containsKey(task.getId())) {
+            remove(task.getId());
         }
         linkLast(task);
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(long id) {
         removeNode(historyTasks.get(id));
     }
 
@@ -40,12 +40,12 @@ public class InMemoryHistoryManager implements HistoryManager {
             tail = newNode;
         }
         size++;
-        historyTasks.put((int) task.getId(), newNode);
+        historyTasks.put(task.getId(), newNode);
     }
 
     public List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
-        for (Map.Entry<Integer, Node<Task>> listTask : historyTasks.entrySet()) {
+        for (Map.Entry<Long, Node<Task>> listTask : historyTasks.entrySet()) {
             tasks.add(listTask.getValue().data);
         }
         return tasks;
