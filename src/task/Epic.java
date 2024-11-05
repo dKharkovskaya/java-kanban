@@ -45,6 +45,7 @@ public class Epic extends Task {
             setStatus(Status.IN_PROGRESS);
         }
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
