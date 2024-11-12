@@ -32,7 +32,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         } catch (IOException e) {
             System.out.println("Произошла ошибка во время записи файла.");
         }
-
     }
 
     private String toString(Task task) {
@@ -48,11 +47,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
             while (fileReader.ready()) {
                 String line = fileReader.readLine();
-                if (line.isEmpty()){
+                if (line.isEmpty()) {
                     return;
                 }
                 Task taskFromFile = fromString(line);
-                if (taskFromFile == null ) {
+                if (taskFromFile == null) {
                     continue;
                 }
                 if (taskFromFile instanceof Epic epic) {
