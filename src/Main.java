@@ -1,19 +1,21 @@
+import manager.FileBackedTaskManager;
 import manager.InMemoryTaskManager;
 import task.*;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         System.out.println("=========create========");
 
         InMemoryTaskManager manager = new InMemoryTaskManager();
-
-        Task task1 = manager.createTask("task1", "description task1");
-        Task task2 = manager.createTask("task2", "description task2");
-
-        Epic epicTask1 = manager.createEpicTask("epicTask1", "description epicTask1");
-        Subtask subTask1 = manager.createSubTask(epicTask1, "subTask1", "description subTask1");
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager("resource\\exampleWrite.csv");
+        Task task1 = fileBackedTaskManager.createTask("task1", "description task1");
+        Task task2 = fileBackedTaskManager.createTask("task2", "description task2");
+        Epic epicTask1 = fileBackedTaskManager.createEpicTask("epicTask1", "description epicTask1");
+        Subtask subTask1 = fileBackedTaskManager.createSubTask(epicTask1, "subTask1", "description subTask1");
         if (subTask1 == null) {
             return;
         }
@@ -86,6 +88,10 @@ public class Main {
 
         manager.clearListEpicTasks();
 
+        printAllTasks(manager);
+
+        System.out.println("========Load Task from Csv File ========");
+        FileBackedTaskManager.loadFromFile("resource\\exampleRead.csv");
         printAllTasks(manager);
 
         System.out.println("========Print List History task========");

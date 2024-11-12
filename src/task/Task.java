@@ -7,6 +7,11 @@ public class Task {
     protected final String name;
     protected final String description;
     protected Status status;
+
+    public String getNameTaskType() {
+        return nameTaskType;
+    }
+
     protected String nameTaskType;
 
     public Task(long id, String name, String description) {
@@ -14,7 +19,7 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
-        nameTaskType = String.valueOf(TaskType.TASK);
+        this.nameTaskType = String.valueOf(TaskType.TASK);
     }
 
     @Override
