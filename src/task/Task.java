@@ -7,7 +7,7 @@ public class Task {
     protected final String name;
     protected final String description;
     protected Status status;
-    protected TaskType taskType ;
+    protected TaskType taskType;
 
     public Task(long id, String name, String description) {
         this.id = id;
