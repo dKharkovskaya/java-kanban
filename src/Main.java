@@ -9,9 +9,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         System.out.println("=========create========");
+        String fileName = "resource\\example.csv";
 
         InMemoryTaskManager manager = new InMemoryTaskManager();
-        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager("resource\\exampleWrite.csv");
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(fileName);
         Task task1 = fileBackedTaskManager.createTask("task1", "description task1");
         Task task2 = fileBackedTaskManager.createTask("task2", "description task2");
         Epic epicTask1 = fileBackedTaskManager.createEpicTask("epicTask1", "description epicTask1");
@@ -91,7 +92,7 @@ public class Main {
         printAllTasks(manager);
 
         System.out.println("========Load Task from Csv File ========");
-        FileBackedTaskManager.loadFromFile("resource\\exampleRead.csv");
+        FileBackedTaskManager.loadFromFile(fileName);
         printAllTasks(manager);
 
         System.out.println("========Print List History task========");
