@@ -7,19 +7,19 @@ public class Task {
     protected final String name;
     protected final String description;
     protected Status status;
-    protected String nameTaskType;
+    protected TaskType taskType;
 
     public Task(long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
-        nameTaskType = String.valueOf(TaskType.TASK);
+        this.taskType = TaskType.TASK;
     }
 
     @Override
     public String toString() {
-        return nameTaskType + "@Id#" + id + ":" + "\n\tname: " + name + "\n\tdescription: " + description + "\n\tstatus: " + getStatus();
+        return getTaskType() + "@Id#" + id + ":" + "\n\tname: " + name + "\n\tdescription: " + description + "\n\tstatus: " + getStatus();
     }
 
     public String getName() {
@@ -33,6 +33,11 @@ public class Task {
     public Status getStatus() {
         return status;
     }
+
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
 
     public void setStatus(Status status) {
         this.status = status;
