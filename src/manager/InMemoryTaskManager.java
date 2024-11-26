@@ -2,10 +2,7 @@ package manager;
 
 import task.*;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class InMemoryTaskManager implements TaskManager {
     private long id = 0;
