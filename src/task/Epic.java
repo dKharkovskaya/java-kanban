@@ -1,5 +1,7 @@
 package task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -7,8 +9,8 @@ import java.util.Objects;
 public class Epic extends Task {
     private final HashMap<Long, Subtask> subTasks = new HashMap<>();
 
-    public Epic(long id, String name, String description) {
-        super(id, name, description);
+    public Epic(long id, String name, String description, long duration, String startTime) {
+        super(id, name, description, duration, startTime);
         this.taskType = TaskType.EPIC;
     }
 

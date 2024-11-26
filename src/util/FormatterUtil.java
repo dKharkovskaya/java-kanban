@@ -4,6 +4,8 @@ import task.*;
 
 import java.util.HashMap;
 
+import static task.Task.DATE_TIME_FORMATTER;
+
 public class FormatterUtil {
 
     public static String toString(Task task) {
@@ -12,22 +14,22 @@ public class FormatterUtil {
             Subtask sbTask = (Subtask) task;
             epicId = String.valueOf(sbTask.getEpicTask().getId());
         }
-        return task.getId() + "," + task.getTaskType() + "," + task.getName() + "," + task.getStatus() + "," + task.getDescription() + "," + epicId;
+        return task.getId() + "," + task.getTaskType() + "," + task.getName() + "," + task.getStatus() + "," + task.getDescription() + "," + epicId + "," + task.getDuration().toMinutes() + "," + task.getStartTime().format(DATE_TIME_FORMATTER) + "," + task.getEndTime().format(DATE_TIME_FORMATTER);
     }
 
     public static Task fromString(String line, HashMap<Long, Epic> epicTasks) {
         String[] arrParam = line.split(",");
         for (int i = 0; i < arrParam.length; i++) {
             if (arrParam[1].equals("TASK")) {
-                Task task = new Task(Long.parseLong(arrParam[0]), arrParam[2], arrParam[4]);
+                Task task = new Task(Long.parseLong(arrParam[0]), arrParam[2], arrParam[4], Long.parseLong(arrParam[6]), arrParam[7]);
                 task.setStatus(Status.valueOf(arrParam[3]));
                 return task;
             } else if (arrParam[1].equals("EPIC")) {
-                Epic epic = new Epic(Long.parseLong(arrParam[0]), arrParam[2], arrParam[4]);
+                Epic epic = new Epic(Long.parseLong(arrParam[0]), arrParam[2], arrParam[4], Long.parseLong(arrParam[6]), arrParam[7]);
                 epic.setStatus(Status.valueOf(arrParam[3]));
                 return epic;
             } else if (arrParam[1].equals("SUBTASK")) {
-                Subtask subtask = new Subtask(Long.parseLong(arrParam[0]), arrParam[2], arrParam[4]);
+                Subtask subtask = new Subtask(Long.parseLong(arrParam[0]), arrParam[2], arrParam[4], Long.parseLong(arrParam[6]), arrParam[7]);
                 try {
                     subtask.setEpicTask(epicTasks.get(Long.parseLong(arrParam[5])));
                 } catch (NumberFormatException e) {

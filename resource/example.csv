@@ -1,5 +1,5 @@
-id,type,name,status,description,epic
-1,TASK,task1,NEW,description task1,
-2,TASK,task2,NEW,description task2,
-3,EPIC,epicTask1,NEW,description epicTask1,
-4,SUBTASK,subTask1,NEW,description subTask1,3
+id,type,name,status,description,epic,duration (minutes),startTime, endTime
+1,TASK,task1,NEW,description task1,,160,12:00 26.11.2024,14:40 26.11.2024
+2,TASK,task2,NEW,description task2,,160,12:30 26.11.2024,15:10 26.11.2024
+3,EPIC,epicTask1,NEW,description epicTask1,,160,13:00 26.11.2024,15:40 26.11.2024
+4,SUBTASK,subTask1,NEW,description subTask1,3,160,14:00 26.11.2024,16:40 26.11.2024
