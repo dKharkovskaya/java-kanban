@@ -1,11 +1,13 @@
 package task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class Epic extends Task {
     private final HashMap<Long, Subtask> subTasks = new HashMap<>();
+    private LocalDateTime endTime;
 
     public Epic(long id, String name, String description, long duration, String startTime) {
         super(id, name, description, duration, startTime);
@@ -57,4 +59,17 @@ public class Epic extends Task {
         Epic item = (Epic) o;
         return id == item.id && Objects.equals(name, item.name) && Objects.equals(description, item.description);
     }
+
+    public void setEndTime(LocalDateTime endTime) {
+        if (this.startTime.isBefore(endTime)) {
+            this.endTime = endTime;
+        }
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+
 }

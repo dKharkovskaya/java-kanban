@@ -1,5 +1,6 @@
 package manager;
 
+import exception.IntersectionException;
 import task.*;
 
 import java.util.*;
@@ -194,38 +195,38 @@ public class InMemoryTaskManager implements TaskManager {
         epic.getListSubTask().clear();
     }
 
-    public void addPriorityTask(Task task) {
+    private void addPriorityTask(Task task) {
         priorityTasks.add(task);
-        checkIntersectionTask();
+        checkIntersectionTask(task);
     }
 
+    @Override
     public List<Task> getPrioritizedTasks() {
         return priorityTasks.stream().toList();
     }
 
-    public void checkIntersectionTask() {
+    private void checkIntersectionTask(Task task) {
         List<Task> tasks = getPrioritizedTasks();
         for (int i = 0; i < tasks.size(); i++) {
-            for (int j = 0; j < tasks.size(); j++) {
-                if (tasks.get(i).equals(tasks.get(j))) {
-                    continue;
+            if (task.equals(tasks.get(i))) {
+                continue;
+            }
+            if (task.getStartTime() != null && task.getEndTime() != null
+                    && tasks.get(i).getStartTime() != null && tasks.get(i).getEndTime() != null) {
+                //Проверка на пересечение
+                if (task.getStartTime().equals(tasks.get(i).getStartTime())
+                        || task.getEndTime().equals(tasks.get(i).getEndTime())
+                        || (task.getStartTime().isAfter(tasks.get(i).getStartTime()) && task.getStartTime().isBefore(tasks.get(i).getEndTime()))
+                        || (task.getEndTime().isAfter(tasks.get(i).getStartTime()) && task.getEndTime().isBefore(tasks.get(i).getEndTime()))
+                        || (tasks.get(i).getStartTime().isAfter(task.getStartTime()) && tasks.get(i).getEndTime().isBefore(task.getEndTime()))
+                        || (task.getStartTime().isAfter(tasks.get(i).getStartTime()) && task.getEndTime().isBefore(tasks.get(i).getEndTime()))
+                ) {
+                    throw new IntersectionException("Пересечение задач");
                 }
-                if (tasks.get(i).getStartTime() != null && tasks.get(i).getEndTime() != null
-                        && tasks.get(j).getStartTime() != null && tasks.get(j).getEndTime() != null) {
-                    //Проверка на пересечение
-                    if (tasks.get(i).getStartTime().equals(tasks.get(j).getStartTime())
-                            || tasks.get(i).getEndTime().equals(tasks.get(j).getEndTime())
-                            || (tasks.get(i).getStartTime().isAfter(tasks.get(j).getStartTime()) && tasks.get(i).getStartTime().isBefore(tasks.get(j).getEndTime()))
-                            || (tasks.get(i).getEndTime().isAfter(tasks.get(j).getStartTime()) && tasks.get(i).getEndTime().isBefore(tasks.get(j).getEndTime()))
-                            || (tasks.get(j).getStartTime().isAfter(tasks.get(i).getStartTime()) && tasks.get(j).getEndTime().isBefore(tasks.get(i).getEndTime()))
-                            || (tasks.get(i).getStartTime().isAfter(tasks.get(j).getStartTime()) && tasks.get(i).getEndTime().isBefore(tasks.get(j).getEndTime()))
-                    ) {
-                        System.out.println("Задача с id=" + tasks.get(i).getId() + " пересекается с задачей id=" + tasks.get(j).getId());
-                    }
 
-                }
             }
         }
     }
-
 }
+
+

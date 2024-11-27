@@ -14,7 +14,6 @@ public class Task {
     protected TaskType taskType;
     protected Duration duration;
     protected LocalDateTime startTime;
-    protected LocalDateTime endTime;
 
     public Task(long id, String name, String description, long duration, String startTime) {
         this.id = id;
@@ -24,7 +23,6 @@ public class Task {
         this.taskType = TaskType.TASK;
         this.startTime = LocalDateTime.parse(startTime, DATE_TIME_FORMATTER);
         this.duration = Duration.ofMinutes(duration);
-        this.endTime = getEndTime();
     }
 
     public String getName() {
@@ -65,12 +63,6 @@ public class Task {
         }
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        if (this.startTime.isBefore(endTime)) {
-            this.endTime = endTime;
-        }
-    }
-
     public LocalDateTime getEndTime() {
         return this.startTime.plusMinutes(duration.toMinutes());
     }
@@ -85,7 +77,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return getTaskType() + "@Id#" + id + ":" + "\n\tname: " + name + "\n\tdescription: " + description + "\n\tstatus: " + getStatus() + "\n\tStartTask: " + startTime.format(DATE_TIME_FORMATTER) + "\n\tEndTask: " + endTime.format(DATE_TIME_FORMATTER);
+        return getTaskType() + "@Id#" + id + ":" + "\n\tname: " + name + "\n\tdescription: " + description + "\n\tstatus: " + getStatus() + "\n\tStartTask: " + startTime.format(DATE_TIME_FORMATTER) + "\n\tEndTask: " + getEndTime().format(DATE_TIME_FORMATTER);
     }
 
 }
