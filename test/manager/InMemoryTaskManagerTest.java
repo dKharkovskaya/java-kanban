@@ -1,6 +1,5 @@
 package manager;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import task.Epic;
@@ -20,8 +19,8 @@ class InMemoryTaskManagerTest {
     @BeforeAll
     static void beforeAll() {
         task1 = manager.createTask("Task1", "Description_1", 160L, "12:00 26.11.2024");
-        epicTask1 = manager.createEpicTask("epicTask1", "Description_1", 160L, "12:00 26.11.2024");
-        subtask1 = manager.createSubTask(epicTask1, "subTask1", "Description1", 160L, "12:00 26.11.2024");
+        epicTask1 = manager.createEpicTask("epicTask1", "Description_1", 160L, "12:00 29.11.2024");
+        subtask1 = manager.createSubTask(epicTask1, "subTask1", "Description1", 160L, "12:00 30.11.2024");
     }
 
     @Test
@@ -36,13 +35,13 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void shouldReturnTask1EqualsTask2() {
-        Task task2 = new Task(1, "Task1", "Description_1", 160L, "12:00 26.11.2024");
+        Task task2 = new Task(1, "Task1", "Description_1", 160L, "12:00 01.11.2024");
         assertEquals(task1, task2);
     }
 
     @Test
     public void shouldReturnEpicTask1EqualsEpicTask2() {
-        Epic epicTask2 = new Epic(2, "epicTask1", "Description_1", 160L, "12:00 26.11.2024");
+        Epic epicTask2 = new Epic(2, "epicTask1", "Description_1", 160L, "12:00 04.11.2024");
         assertEquals(epicTask1, epicTask2);
     }
 
@@ -53,8 +52,8 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void shouldReturnSubTask1EqualsSubTask1() {
-        Subtask subTask2 = new Subtask(3, "subTask1", "Description1", 160L, "12:00 26.11.2024");
-        subTask2.setEpicTask(new Epic(2, "epicTask1", "Description_1", 160L, "12:00 26.11.2024"));
+        Subtask subTask2 = new Subtask(3, "subTask1", "Description1", 160L, "12:00 07.11.2024");
+        subTask2.setEpicTask(new Epic(2, "epicTask1", "Description_1", 160L, "12:00 10.11.2024"));
         assertEquals(epicTask1.getListSubTask().getFirst(), subTask2);
     }
 
@@ -75,7 +74,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void shouldUpdateTask() {
-        manager.updateTask(task1, "new Task1", "Desription2", 160L, "12:00 26.11.2024");
+        manager.updateTask(task1, "new Task1", "Desription2", 160L, "12:00 12.11.2024");
         assertEquals(1, manager.getTaskById(task1.getId()).getId());
         assertEquals("new Task1", manager.getTaskById(task1.getId()).getName());
         assertEquals("Desription2", manager.getTaskById(task1.getId()).getDescription());
@@ -83,7 +82,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void shouldUpdateEpic() {
-        manager.updateEpicTask(epicTask1, "new EpicTask1", "Desription2", 160L, "12:00 26.11.2024");
+        manager.updateEpicTask(epicTask1, "new EpicTask1", "Desription2", 160L, "12:00 14.11.2024");
         assertEquals(2, manager.getEpicTaskById(epicTask1.getId()).getId());
         assertEquals("new EpicTask1", manager.getEpicTaskById(epicTask1.getId()).getName());
         assertEquals("Desription2", manager.getEpicTaskById(epicTask1.getId()).getDescription());
