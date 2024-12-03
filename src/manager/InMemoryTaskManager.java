@@ -207,25 +207,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     private void checkIntersectionTask(Task task) {
         List<Task> tasks = getPrioritizedTasks();
-        for (int i = 0; i < tasks.size(); i++) {
-            if (task.equals(tasks.get(i))) {
-                continue;
-            }
-            if (task.getStartTime() != null && task.getEndTime() != null
-                    && tasks.get(i).getStartTime() != null && tasks.get(i).getEndTime() != null) {
-                //Проверка на пересечение
-                if (task.getStartTime().equals(tasks.get(i).getStartTime())
-                        || task.getEndTime().equals(tasks.get(i).getEndTime())
-                        || (task.getStartTime().isAfter(tasks.get(i).getStartTime()) && task.getStartTime().isBefore(tasks.get(i).getEndTime()))
-                        || (task.getEndTime().isAfter(tasks.get(i).getStartTime()) && task.getEndTime().isBefore(tasks.get(i).getEndTime()))
-                        || (tasks.get(i).getStartTime().isAfter(task.getStartTime()) && tasks.get(i).getEndTime().isBefore(task.getEndTime()))
-                        || (task.getStartTime().isAfter(tasks.get(i).getStartTime()) && task.getEndTime().isBefore(tasks.get(i).getEndTime()))
+        tasks.forEach(taskStream -> {
+            if (task.getStartTime() != null && task.getEndTime() != null && taskStream.getStartTime() != null && taskStream.getEndTime() != null && !task.equals(taskStream)) {
+                if (task.getStartTime().equals(taskStream.getStartTime())
+                        || task.getEndTime().equals(taskStream.getEndTime())
+                        || (task.getStartTime().isAfter(taskStream.getStartTime()) && task.getStartTime().isBefore(taskStream.getEndTime()))
+                        || (task.getEndTime().isAfter(taskStream.getStartTime()) && task.getEndTime().isBefore(taskStream.getEndTime()))
+                        || (taskStream.getStartTime().isAfter(task.getStartTime()) && taskStream.getEndTime().isBefore(task.getEndTime()))
+                        || (task.getStartTime().isAfter(taskStream.getStartTime()) && task.getEndTime().isBefore(taskStream.getEndTime()))
                 ) {
                     throw new IntersectionException("Пересечение задач");
                 }
-
             }
-        }
+        });
     }
 }
 

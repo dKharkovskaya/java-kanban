@@ -6,6 +6,7 @@ import task.Epic;
 import task.Status;
 import task.Subtask;
 import task.Task;
+import exception.IntersectionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -117,5 +118,15 @@ class InMemoryTaskManagerTest {
         manager.clearListTasks();
         assertEquals(0, manager.getListTasks().size());
     }
+
+    @Test
+    public void shouldIntersectionTask() throws IntersectionException {
+        Throwable thrown = assertThrows(IntersectionException.class, () -> {
+            Task task5 = manager.createTask("Task5", "Description_5", 160L, "12:00 26.11.2024");
+        });
+        //проверка, вылетело ли исключение. Если вылетело - то тест вернет положительный результат
+        assertNotNull(thrown.getMessage());
+    }
+
 
 }

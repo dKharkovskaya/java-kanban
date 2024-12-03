@@ -14,22 +14,22 @@ public class Main {
         InMemoryTaskManager manager = new InMemoryTaskManager();
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(fileName);
         Task task1 = fileBackedTaskManager.createTask("task1", "description task1", 160L, "12:00 26.11.2024");
-        Task task2 = fileBackedTaskManager.createTask("task2", "description task2", 160L, "12:30 26.11.2024");
-        Epic epicTask1 = fileBackedTaskManager.createEpicTask("epicTask1", "description epicTask1", 160L, "13:00 26.11.2024");
-        Subtask subTask1 = fileBackedTaskManager.createSubTask(epicTask1, "subTask1", "description subTask1", 160L, "14:00 26.11.2024");
+        Task task2 = fileBackedTaskManager.createTask("task2", "description task2", 160L, "18:30 26.11.2024");
+        Epic epicTask1 = fileBackedTaskManager.createEpicTask("epicTask1", "description epicTask1", 160L, "13:00 27.11.2024");
+        Subtask subTask1 = fileBackedTaskManager.createSubTask(epicTask1, "subTask1", "description subTask1", 160L, "14:00 29.11.2024");
         if (subTask1 == null) {
             return;
         }
 
-        Epic epicTask2 = manager.createEpicTask("epicTask2", "description epicTask2", 160L, "12:10 26.11.2024");
+        Epic epicTask2 = manager.createEpicTask("epicTask2", "description epicTask2", 160L, "12:10 26.12.2024");
         if (epicTask2 == null) {
             return;
         }
-        Subtask subTask2 = manager.createSubTask(epicTask2, "subTask2", "description subTask2", 160L, "12:20 26.11.2024");
+        Subtask subTask2 = fileBackedTaskManager.createSubTask(epicTask1, "subTask2", "description subTask2", 160L, "12:20 30.01.2024");
         if (subTask2 == null) {
             return;
         }
-        Subtask subTask3 = manager.createSubTask(epicTask2, "subTask3", "description subTask3", 160L, "12:50 26.11.2024");
+        Subtask subTask3 = manager.createSubTask(epicTask2, "subTask3", "description subTask3", 160L, "15:50 30.01.2024");
         if (subTask3 == null) {
             return;
         }
@@ -38,8 +38,8 @@ public class Main {
 
         System.out.println("=========update========");
         task2 = manager.updateTask(task2, "task3", "description task3", 160L, "12:00 26.11.2024");
-        epicTask1 = manager.updateEpicTask(epicTask1, "epicTask3", "description epicTask3", 160L, "12:00 26.11.2024");
-        subTask3 = manager.updateSubTask(subTask3, "subTask4", "description subTask4", 160L, "12:00 26.11.2024");
+        epicTask1 = manager.updateEpicTask(epicTask1, "epicTask3", "description epicTask3", 160L, "12:00 26.03.2024");
+        subTask3 = manager.updateSubTask(subTask3, "subTask4", "description subTask4", 160L, "12:00 26.04.2024");
 
         printAllTasks(manager);
 

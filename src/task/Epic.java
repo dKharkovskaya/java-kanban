@@ -1,6 +1,8 @@
 package task;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -68,7 +70,44 @@ public class Epic extends Task {
 
     @Override
     public LocalDateTime getEndTime() {
-        return endTime;
+        LocalDateTime endSubtask = startTime;
+        Duration sumDurationSubTask = Duration.ofMinutes(0L);
+        if (subTasks.isEmpty()) {
+            return this.startTime.plusMinutes(duration.toMinutes());
+        } else {
+            for (Subtask subtask : subTasks.values()) {
+                if (subtask.getEndTime().isAfter(endSubtask)) {
+                    endSubtask = subtask.getEndTime();
+                }
+            }
+            this.endTime = endSubtask;
+            return endSubtask;
+        }
+    }
+
+    @Override
+    public LocalDateTime getStartTime() {
+        LocalDateTime startSubtask = LocalDateTime.now();
+        if (subTasks.isEmpty()) {
+            return this.startTime;
+        } else {
+            for (Subtask subtask : subTasks.values()) {
+                if (subtask.getStartTime().isBefore(startSubtask)) {
+                    startSubtask = subtask.getStartTime();
+                }
+            }
+            this.startTime = startSubtask;
+            return startSubtask;
+        }
+    }
+
+    @Override
+    public Duration getDuration() {
+        if (subTasks.isEmpty()) {
+            return this.duration;
+        } else {
+            return Duration.between(this.startTime, this.endTime);
+        }
     }
 
 

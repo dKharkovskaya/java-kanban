@@ -2,7 +2,9 @@ package util;
 
 import task.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Locale;
 
 import static task.Task.DATE_TIME_FORMATTER;
 
@@ -14,7 +16,9 @@ public class FormatterUtil {
             Subtask sbTask = (Subtask) task;
             epicId = String.valueOf(sbTask.getEpicTask().getId());
         }
-        return task.getId() + "," + task.getTaskType() + "," + task.getName() + "," + task.getStatus() + "," + task.getDescription() + "," + epicId + "," + task.getDuration().toMinutes() + "," + task.getStartTime().format(DATE_TIME_FORMATTER) + "," + task.getEndTime().format(DATE_TIME_FORMATTER);
+        LocalDateTime startTime = task.getStartTime();
+        LocalDateTime endTime = task.getEndTime();
+        return task.getId() + "," + task.getTaskType() + "," + task.getName() + "," + task.getStatus() + "," + task.getDescription() + "," + epicId + "," + task.getDuration().toMinutes() + "," + startTime.format(DATE_TIME_FORMATTER) + "," + endTime.format(DATE_TIME_FORMATTER);
     }
 
     public static Task fromString(String line, HashMap<Long, Epic> epicTasks) {
