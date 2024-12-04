@@ -14,6 +14,9 @@ public class FormatterUtil {
         if (task.getTaskType().equals(TaskType.SUBTASK)) {
             Subtask sbTask = (Subtask) task;
             epicId = String.valueOf(sbTask.getEpicTask().getId());
+        } else if (task.getTaskType().equals(TaskType.EPIC)) {
+            Epic epic = (Epic) task;
+            epic.calculateTime();
         }
         LocalDateTime startTime = task.getStartTime();
         LocalDateTime endTime = task.getEndTime();
@@ -29,6 +32,7 @@ public class FormatterUtil {
                 return task;
             } else if (arrParam[1].equals("EPIC")) {
                 Epic epic = new Epic(Long.parseLong(arrParam[0]), arrParam[2], arrParam[4], Long.parseLong(arrParam[6]), arrParam[7]);
+                epic.setEndTime(LocalDateTime.parse(arrParam[8], DATE_TIME_FORMATTER));
                 epic.setStatus(Status.valueOf(arrParam[3]));
                 return epic;
             } else if (arrParam[1].equals("SUBTASK")) {

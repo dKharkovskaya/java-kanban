@@ -40,6 +40,7 @@ public class InMemoryTaskManager implements TaskManager {
             id += 1;
             Subtask subTask = new Subtask(id, name, description, duration, startTime);
             epicTasks.get(task.getId()).addSubTask(subTask);
+            task.calculateTime();
             addPriorityTask(subTask);
             return subTask;
         }
@@ -84,6 +85,7 @@ public class InMemoryTaskManager implements TaskManager {
             for (Subtask sub : task.getListSubTask()) {
                 newEpic.addSubTask(sub);
             }
+            newEpic.calculateTime();
             epicTasks.put(task.getId(), newEpic);
             return newEpic;
         }

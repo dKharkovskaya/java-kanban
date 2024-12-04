@@ -62,17 +62,30 @@ public class Epic extends Task {
     }
 
     public void setEndTime(LocalDateTime endTime) {
-        if (this.startTime.isBefore(endTime)) {
-            this.endTime = endTime;
-        }
+        this.endTime = endTime;
     }
 
     @Override
     public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    private void calculateStartTime() {
+        LocalDateTime startSubtask = LocalDateTime.now();
+        if (!subTasks.isEmpty()) {
+            for (Subtask subtask : subTasks.values()) {
+                if (subtask.getStartTime().isBefore(startSubtask)) {
+                    startSubtask = subtask.getStartTime();
+                }
+            }
+            this.startTime = startSubtask;
+        }
+    }
+
+    private void calculateEndTime() {
         LocalDateTime endSubtask = startTime;
-        Duration sumDurationSubTask = Duration.ofMinutes(0L);
         if (subTasks.isEmpty()) {
-            return this.startTime.plusMinutes(duration.toMinutes());
+            this.endTime = this.startTime.plusMinutes(duration.toMinutes());
         } else {
             for (Subtask subtask : subTasks.values()) {
                 if (subtask.getEndTime().isAfter(endSubtask)) {
@@ -80,34 +93,19 @@ public class Epic extends Task {
                 }
             }
             this.endTime = endSubtask;
-            return endSubtask;
         }
     }
 
-    @Override
-    public LocalDateTime getStartTime() {
-        LocalDateTime startSubtask = LocalDateTime.now();
-        if (subTasks.isEmpty()) {
-            return this.startTime;
-        } else {
-            for (Subtask subtask : subTasks.values()) {
-                if (subtask.getStartTime().isBefore(startSubtask)) {
-                    startSubtask = subtask.getStartTime();
-                }
-            }
-            this.startTime = startSubtask;
-            return startSubtask;
+    private void calculateDuration() {
+        if (!subTasks.isEmpty()) {
+            this.duration = Duration.between(this.startTime, this.endTime);
         }
     }
 
-    @Override
-    public Duration getDuration() {
-        if (subTasks.isEmpty()) {
-            return this.duration;
-        } else {
-            return Duration.between(this.startTime, this.endTime);
-        }
+    public void calculateTime() {
+        calculateStartTime();
+        calculateEndTime();
+        calculateDuration();
+
     }
-
-
 }
