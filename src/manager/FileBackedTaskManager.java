@@ -10,7 +10,7 @@ import static util.FormatterUtil.fromString;
 
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
     private final String fileName;
-    private static final String HEAD_CSV = "id,type,name,status,description,epic";
+    private static final String HEAD_CSV = "id,type,name,status,description,epic,duration (minutes),startTime, endTime";
 
     public FileBackedTaskManager(String fileName) {
         this.fileName = fileName;
@@ -62,43 +62,43 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     @Override
-    public Task createTask(String name, String description) {
-        Task task = super.createTask(name, description);
+    public Task createTask(String name, String description, long duration, String startTime) {
+        Task task = super.createTask(name, description, duration, startTime);
         save();
         return task;
     }
 
     @Override
-    public Epic createEpicTask(String name, String description) {
-        Epic task = super.createEpicTask(name, description);
+    public Epic createEpicTask(String name, String description, long duration, String startTime) {
+        Epic task = super.createEpicTask(name, description, duration, startTime);
         save();
         return task;
     }
 
     @Override
-    public Subtask createSubTask(Epic task, String name, String description) {
-        Subtask subTask = super.createSubTask(task, name, description);
+    public Subtask createSubTask(Epic task, String name, String description, long duration, String startTime) {
+        Subtask subTask = super.createSubTask(task, name, description, duration, startTime);
         save();
         return subTask;
     }
 
     @Override
-    public Task updateTask(Task task, String name, String description) {
-        Task updatingTask = super.updateTask(task, name, description);
+    public Task updateTask(Task task, String name, String description, long duration, String startTime) {
+        Task updatingTask = super.updateTask(task, name, description, duration, startTime);
         save();
         return updatingTask;
     }
 
     @Override
-    public Epic updateEpicTask(Epic task, String name, String description) {
-        Epic updatingTask = super.updateEpicTask(task, name, description);
+    public Epic updateEpicTask(Epic task, String name, String description, long duration, String startTime) {
+        Epic updatingTask = super.updateEpicTask(task, name, description, duration, startTime);
         save();
         return updatingTask;
     }
 
     @Override
-    public Subtask updateSubTask(Subtask task, String name, String description) {
-        Subtask updatingTask = super.updateSubTask(task, name, description);
+    public Subtask updateSubTask(Subtask task, String name, String description, long duration, String startTime) {
+        Subtask updatingTask = super.updateSubTask(task, name, description, duration, startTime);
         save();
         return updatingTask;
     }

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
     InMemoryHistoryManager inMemoryHistoryManager = new InMemoryHistoryManager();
-    Task task = new Task(1, "Task1", "Descr1");
+    Task task = new Task(1, "Task1", "Descr1", 160L, "12:00 26.11.2024");
 
     @Test
     void shouldAdd1TaskInHistory() {
