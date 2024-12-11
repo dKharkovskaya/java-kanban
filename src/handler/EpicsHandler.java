@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class EpicsHandler implements HttpHandler {//♥♥♥
+public class EpicsHandler implements HttpHandler {
     private InMemoryTaskManager manager;
     private final List<Task> epics;
 
