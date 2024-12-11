@@ -1,3 +1,4 @@
+import http.HttpTaskServer;
 import manager.FileBackedTaskManager;
 import manager.InMemoryTaskManager;
 import task.*;
@@ -7,7 +8,6 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-
         System.out.println("=========create========");
         String fileName = "resource\\example.csv";
 
@@ -56,6 +56,9 @@ public class Main {
             return;
         }
         System.out.println("success\n");
+        HttpTaskServer httpTaskServer = new HttpTaskServer(manager);
+        httpTaskServer.start();
+
 
         System.out.println("========move to progress========");
         manager.moveTaskToProgress(task1.getId());
