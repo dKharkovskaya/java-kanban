@@ -7,9 +7,8 @@ import task.Task;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
-
-import static jdk.internal.util.xml.XMLStreamWriter.DEFAULT_CHARSET;
 
 public class BaseHttpHandler {
 
@@ -58,7 +57,7 @@ public class BaseHttpHandler {
     }
 
     public static Optional<Task> parseTask(InputStream bodyInputStream, InMemoryTaskManager manager) throws IOException {
-        String body = new String(bodyInputStream.readAllBytes(), DEFAULT_CHARSET);
+        String body = new String(bodyInputStream.readAllBytes(), StandardCharsets.UTF_8);
         String name;
         String description;
         long duration;
