@@ -10,18 +10,18 @@ import task.Task;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
+public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
 
-    public HistoryHandler(InMemoryTaskManager manager) {
+    public PrioritizedHandler(InMemoryTaskManager manager) {
         super(manager);
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        Endpoint endpoint = getEndpoint(exchange.getRequestURI().getPath(), exchange.getRequestMethod(), "history");
+        Endpoint endpoint = getEndpoint(exchange.getRequestURI().getPath(), exchange.getRequestMethod(), "prioritized");
         switch (endpoint) {
             case GET: {
-                handleGetHistoryTasks(exchange);
+                handleGetPrioritizedTasks(exchange);
                 break;
             }
             default:
@@ -29,8 +29,8 @@ public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
         }
     }
 
-    private void handleGetHistoryTasks(HttpExchange exchange) throws IOException {
-        String response = manager.getHistory().stream()
+    private void handleGetPrioritizedTasks(HttpExchange exchange) throws IOException {
+        String response = manager.getPrioritizedTasks().stream()
                 .map(Task::toString)
                 .collect(Collectors.joining("\n"));
         writeResponse(exchange, response, 200);

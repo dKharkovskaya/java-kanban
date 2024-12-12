@@ -8,58 +8,56 @@ import manager.InMemoryTaskManager;
 import task.Task;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class EpicsHandler implements HttpHandler {
-    private InMemoryTaskManager manager;
-    private final List<Task> epics;
+public class EpicsHandler extends BaseHttpHandler implements HttpHandler {
+    ;
 
     public EpicsHandler(InMemoryTaskManager manager) {
-        this.epics = manager.getListEpicTasks();
+        super(manager);
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        Endpoint endpoint = BaseHttpHandler.getEndpoint(exchange.getRequestURI().getPath(), exchange.getRequestMethod(), "epics");
+        Endpoint endpoint = getEndpoint(exchange.getRequestURI().getPath(), exchange.getRequestMethod(), "epics");
         switch (endpoint) {
             case GET: {
-                handleGetSubTasks(exchange);
+                handleGetEpicTasks(exchange);
                 break;
             }
             case POST: {
-                handlePostSubTasks(exchange);
+                handlePostEpicTasks(exchange);
                 break;
             }
             case DELETE: {
-                BaseHttpHandler.handleDeleteTaskById(exchange, manager);
+                handleDeleteTaskById(exchange, manager);
                 break;
             }
             default:
-                BaseHttpHandler.writeResponse(exchange, "Такого эндпоинта не существует", 404);
+                writeResponse(exchange, "Такого эндпоинта не существует", 404);
         }
     }
 
-    private void handleGetSubTasks(HttpExchange exchange) throws IOException {
-        String response = epics.stream()
+    private void handleGetEpicTasks(HttpExchange exchange) throws IOException {
+        String response = manager.getListEpicTasks().stream()
                 .map(Task::toString)
                 .collect(Collectors.joining("\n"));
-        BaseHttpHandler.writeResponse(exchange, response, 200);
+        writeResponse(exchange, response, 200);
     }
 
-    private void handlePostSubTasks(HttpExchange exchange) throws IOException {
-        Optional<Task> taskBody = BaseHttpHandler.parseTask(exchange.getRequestBody(), manager);
+    private void handlePostEpicTasks(HttpExchange exchange) throws IOException {
+        Optional<Task> taskBody = parseTask(exchange.getRequestBody(), manager);
         Task taskNew = taskBody.get();
         exchange.sendResponseHeaders(201, 0);
-        BaseHttpHandler.writeResponse(exchange, "Задача добавлена", 201);
-        for (Task task : epics) {
+        writeResponse(exchange, "Задача добавлена", 201);
+        for (Task task : manager.getListEpicTasks()) {
             if (taskNew.getId() == task.getId()) {
-                BaseHttpHandler.writeResponse(exchange, "Задача с идентификатором " + task.getId() + "уже существует", 404);
+                writeResponse(exchange, "Задача с идентификатором " + task.getId() + "уже существует", 404);
             }
         }
         manager.getListTasks().add(taskNew);
-        BaseHttpHandler.writeResponse(exchange, "Задача добавлена", 201);
+        writeResponse(exchange, "Задача добавлена", 201);
     }
 
 }
