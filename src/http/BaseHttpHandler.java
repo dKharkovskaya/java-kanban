@@ -1,7 +1,5 @@
 package http;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import manager.InMemoryTaskManager;
 import task.Task;
@@ -16,8 +14,6 @@ import java.util.Optional;
 public class BaseHttpHandler {
     protected InMemoryTaskManager manager;
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    Gson gson;
 
     protected BaseHttpHandler(InMemoryTaskManager manager) {
         this.manager = manager;
@@ -69,7 +65,7 @@ public class BaseHttpHandler {
     }
 
     public Optional<Task> parseTask(InputStream bodyInputStream, InMemoryTaskManager manager) throws IOException {
-        String body = new String(bodyInputStream.readAllBytes(), StandardCharsets.UTF_8);
+        String body = new String(bodyInputStream.readAllBytes(), DEFAULT_CHARSET);
         String name;
         String description;
         long duration;
